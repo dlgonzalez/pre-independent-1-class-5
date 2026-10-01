@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pre-Independent 1 | Unit 1 – Class 5</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .glass-panel { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); }
+        .correct-highlight { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534 !important; }
+        .wrong-highlight { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; }
+        .sample-answer { background: #f0fdf4; border-left: 4px solid #22c55e; }
+        .toast { position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; border-radius: 8px; color: white; font-weight: bold; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(20px); pointer-events: none; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast-success { background-color: #10b981; }
+        .toast-error { background-color: #ef4444; }
+        .toast-info { background-color: #3b82f6; }
+        .transition-box { background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-left: 4px solid #6366f1; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; }
+        .transition-box h4 { color: #3730a3; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .transition-box p { color: #334155; font-size: 0.9rem; line-height: 1.6; }
+        .instruction-box { background: #fff7ed; border-left: 4px solid #f97316; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; }
+        .instruction-box h4 { color: #9a3412; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .instruction-box ol, .instruction-box ul { color: #334155; font-size: 0.88rem; line-height: 1.7; padding-left: 20px; }
+        
+        /* Custom UI */
+        .word-tile { transition: all 0.2s; cursor: pointer; }
+        .word-tile:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .word-tile.hidden-tile { opacity: 0; pointer-events: none; transform: scale(0.8); }
+        .timer-active { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .survival-item { transition: all 0.2s; border: 3px solid transparent; cursor: pointer; }
+        .survival-item:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .survival-item.selected { border-color: #f59e0b; background-color: #fffbeb; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-slate-900 text-white shadow-xl relative overflow-hidden border-b-4 border-amber-500">
+        <!-- Background accents -->
+        <div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 py-10 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Title & Course Info (Spans 2 columns) -->
+                <div class="lg:col-span-2 flex items-center gap-6">
+                    <div class="hidden sm:flex h-24 w-24 bg-white/10 rounded-2xl border border-white/20 items-center justify-center text-5xl shadow-inner backdrop-blur-sm">
+                        🧗
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-amber-500 text-amber-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Level B1</span>
+                            <span class="text-amber-400 text-sm font-bold uppercase tracking-widest"><i class="fa-solid fa-microchip mr-2"></i>Pre-Independent 1</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2 drop-shadow-md">
+                            Unit 1: Incredible Lives
+                        </h1>
+                        <p class="text-slate-300 text-lg font-medium tracking-wide">
+                            <span class="text-rose-400 mr-2 font-bold">Class 5</span> • Special Survival Edition
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Mission Box (Spans 1 column) -->
+                <div class="bg-slate-800/80 p-6 rounded-2xl backdrop-blur-md border border-slate-700 shadow-xl">
+                    <h2 class="text-lg font-black text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide"><span class="text-xl">🎯</span> Today's Mission</h2>
+                    <ul class="text-sm text-slate-200 space-y-2.5 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-check text-amber-500 mt-1 mr-3"></i> <span><strong>Review</strong> noun suffixes in a fast-paced game.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-amber-500 mt-1 mr-3"></i> <span><strong>Master</strong> 20 character and survival adjectives.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-amber-500 mt-1 mr-3"></i> <span><strong>Extract</strong> details from an audio survival story.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-amber-500 mt-1 mr-3"></i> <span><strong>Write</strong> a structured, descriptive blog post.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-amber-500 mt-1 mr-3"></i> <span><strong>Negotiate</strong> a desert crash survival simulation.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex space-x-2 overflow-x-auto py-4 no-scrollbar" id="tab-container">
+                <button onclick="switchTab('tab0')" id="btn-tab0" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 bg-slate-800 text-white shadow-md whitespace-nowrap">0. 🏭 Suffix Factory</button>
+                <button onclick="switchTab('tab1')" id="btn-tab1" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 text-slate-500 hover:bg-slate-100 whitespace-nowrap">1. 🎧 Survival Traits</button>
+                <button onclick="switchTab('tab2')" id="btn-tab2" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 text-slate-500 hover:bg-slate-100 whitespace-nowrap">2. ✍️ The Blog Post</button>
+                <button onclick="switchTab('tab3')" id="btn-tab3" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 text-slate-500 hover:bg-slate-100 whitespace-nowrap">3. 🏜️ Desert Simulation</button>
+                <button onclick="switchTab('tab4')" id="btn-tab4" class="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 text-slate-500 hover:bg-slate-100 whitespace-nowrap">4. 🏁 Wrap-Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+        <!-- TAB 0: WARM-UP (SUFFIX FACTORY) -->
+        <section id="tab0" class="tab-content active fade-in">
+            <div class="glass-panel p-8 rounded-3xl">
+                <div class="transition-box">
+                    <h4><i class="fa-solid fa-industry"></i> Warm-Up: The Suffix Factory</h4>
+                    <p>Over the last two classes, we built nouns using specific suffixes. Let's see how fast you can remember them. Welcome to the factory line!</p>
+                </div>
+                
+                <div class="instruction-box">
+                    <h4><i class="fa-solid fa-stopwatch"></i> How to Play</h4>
+                    <ol class="list-decimal">
+                        <li>Click "Start Factory". A root word will appear on the screen.</li>
+                        <li>Quickly click the correct suffix button to build the noun.</li>
+                        <li>Clear all 20 words to finish the shift! Watch out for spelling changes.</li>
+                    </ol>
+                </div>
+
+                <div class="bg-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl max-w-3xl mx-auto border-4 border-slate-800 text-center relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 text-9xl opacity-10 pointer-events-none">🏭</div>
+                    
+                    <div class="flex justify-between text-slate-400 font-bold mb-8 text-sm border-b border-slate-700 pb-4">
+                        <span class="uppercase tracking-widest">Words remaining: <span id="factory-count" class="text-white text-lg ml-2">20</span></span>
+                        <span class="uppercase tracking-widest">Score: <span id="factory-score" class="text-emerald-400 text-lg ml-2">0</span></span>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-2xl p-8 shadow-inner min-h-[180px] flex items-center justify-center mb-8 border-2 border-slate-700">
+                        <h3 id="factory-word" class="text-4xl md:text-5xl font-black text-white tracking-widest uppercase">READY?</h3>
+                    </div>
+
+                    <div id="factory-controls" class="hidden grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <button onclick="checkFactory('-ment')" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_0_#1d4ed8] active:translate-y-[4px] active:shadow-none transition-all">-MENT</button>
+                        <button onclick="checkFactory('-ness')" class="bg-pink-500 hover:bg-pink-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_0_#be185d] active:translate-y-[4px] active:shadow-none transition-all">-NESS</button>
+                        <button onclick="checkFactory('-ity')" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_0_#7e22ce] active:translate-y-[4px] active:shadow-none transition-all">-ITY</button>
+                        <button onclick="checkFactory('-tion')" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_0_#047857] active:translate-y-[4px] active:shadow-none transition-all">-TION/SION</button>
+                        <button onclick="checkFactory('-er')" class="bg-amber-500 hover:bg-amber-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_0_#b45309] active:translate-y-[4px] active:shadow-none transition-all">-ER/OR</button>
+                    </div>
+
+                    <button onclick="startFactory()" id="factory-start-btn" class="bg-indigo-500 hover:bg-indigo-400 text-white font-black py-4 px-12 rounded-full text-xl shadow-[0_6px_0_#3730a3] active:translate-y-[6px] active:shadow-none transition-all mt-4">
+                        START FACTORY
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1: SURVIVAL TRAITS (VOCAB & LISTENING) -->
+        <section id="tab1" class="tab-content fade-in">
+            <div class="glass-panel p-8 rounded-3xl">
+                <div class="transition-box">
+                    <h4><i class="fa-solid fa-heart-pulse"></i> Vocabulary & Listening: Survival</h4>
+                    <p>What does it take to survive when everything goes wrong? Is it physical strength, or is it character? Let's master 20 words that describe the ultimate survivor.</p>
+                </div>
+
+                <!-- 20 Word Tile Match Game -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-black text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-brain text-amber-500"></i> The 20-Word Character Matrix</h3>
+                    
+                    <div class="instruction-box mb-6">
+                        <h4><i class="fa-solid fa-hand-pointer"></i> How to play</h4>
+                        <ol class="list-decimal">
+                            <li>Look at the target definition in the dark box below.</li>
+                            <li>Find the character adjective in the word bank that matches the meaning.</li>
+                            <li>Click it! If you are right, the word disappears. Clear all 20 to unlock the listening task.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow border border-slate-200 mb-6 flex justify-between items-center max-w-sm mx-auto">
+                        <span class="font-bold text-slate-700">Vocabulary Score</span>
+                        <span id="vocab-score" class="font-black text-2xl text-amber-600">0 / 20</span>
+                    </div>
+
+                    <div class="bg-slate-900 text-white rounded-2xl p-8 text-center mb-8 shadow-xl min-h-[140px] flex flex-col justify-center border-b-4 border-amber-500">
+                        <p class="text-amber-400 font-bold text-sm uppercase tracking-wider mb-2">Find the word for:</p>
+                        <p id="target-definition" class="text-xl md:text-2xl font-semibold">Loading...</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3" id="word-bank">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Listening Section -->
+                <div class="border-t border-slate-200 pt-10">
+                    <h3 class="text-2xl font-black text-slate-800 mb-6"><i class="fa-solid fa-headphones text-indigo-500"></i> Listening: Juliane Koepcke</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                        <!-- Context Box -->
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-lg col-span-1">
+                            <h4 class="font-bold text-indigo-400 mb-4 text-lg border-b border-slate-700 pb-2">The Incredible Story</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">Juliane Koepcke was just a teenager when her life changed forever. Her story is one of the most famous examples of human resilience in history.</p>
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-600 text-center animate-pulse">
+                                <i class="fa-solid fa-volume-high text-3xl text-emerald-400 mb-2"></i>
+                                <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Listen to Audio 1.04</p>
+                            </div>
+                        </div>
+
+                        <!-- Notes Form -->
+                        <div class="bg-white rounded-2xl p-6 shadow border border-slate-200 col-span-1 md:col-span-2">
+                            <h4 class="font-bold text-slate-800 mb-2">Listen for Specific Details</h4>
+                            <p class="text-sm text-slate-500 mb-6">Listen to the podcast. Complete the notes with a number, a single word, or a short phrase.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm font-medium text-slate-700">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>1. Born:</span>
+                                    <input type="text" id="l1" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>2. Crash happened when she was:</span>
+                                    <input type="text" id="l2" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>3. Height of plane:</span>
+                                    <input type="text" id="l3" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>4. Saved by:</span>
+                                    <input type="text" id="l4" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>5. Food:</span>
+                                    <input type="text" id="l5" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>6. In rainforest for:</span>
+                                    <input type="text" id="l6" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>7. Later, became:</span>
+                                    <input type="text" id="l7" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                    <span>8. Book published in:</span>
+                                    <input type="text" id="l8" class="w-32 p-1 text-center border border-slate-300 rounded outline-none focus:border-indigo-500">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 text-center">
+                                <button onclick="checkListening()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-8 rounded shadow transition text-sm">Check Notes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Speaking Moment -->
+                <div class="bg-rose-50 border-l-4 border-rose-500 rounded-r-2xl p-6 shadow-sm mt-8">
+                    <h4 class="text-rose-900 font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-comments"></i> The Close Call</h4>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        <strong>Discuss with a partner (5 mins):</strong> Have you, or someone you know, ever been in a dangerous or frightening situation (e.g., getting lost, an extreme weather event, an accident)? What happened? How did you survive?
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: THE BLOG POST (WRITING) -->
+        <section id="tab2" class="tab-content fade-in">
+            <div class="glass-panel p-8 rounded-3xl">
+                <div class="transition-box">
+                    <h4><i class="fa-solid fa-pen-nib"></i> Writing: A Blog Post</h4>
+                    <p>A good survival story needs more than just facts. It needs emotion, opinion, and a clear structure. Let's learn how to write a compelling blog post.</p>
+                </div>
+
+                <!-- Step 1: Analysis -->
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Step 1: Analyze the Model</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-sm leading-relaxed shadow-sm">
+                        <h4 class="font-black text-indigo-800 mb-3 text-lg border-b border-slate-200 pb-2">An Amazing Story</h4>
+                        <p class="mb-3">Hi, guys! I want to share with you an amazing story of survival. Some of you might know about it already. In 2018, 12 teenagers and their football coach went into caves in Thailand. It started to rain and they couldn't get out because of the water. They were in there for nine days without any food or light. They drank water from the cave walls!</p>
+                        <p class="mb-3">Divers eventually found them after a long search, but they still had a problem. The water made it very hard to get the boys out, and most of them couldn't swim. And it was the start of the rainy season, so they didn't have a lot of time. Finally, the divers succeeded in getting all the boys out, but it wasn't easy.</p>
+                        <p>I hate the idea of being stuck in a dark cave! I'd be very scared. You need to be calm and independent to survive a situation like that. I think the boys were really brave, and so were the divers who rescued them. They had to be creative to find a solution to the problem, but they did it. If you are curious, search online and read the whole story.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <p class="font-bold text-slate-800 mb-4">Based on the text, is the statement True or False?</p>
+                        <div class="space-y-4" id="writing-tf">
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                                <span class="w-2/3">1. The writer speaks directly to the readers to create a friendly style.</span>
+                                <div class="flex gap-1" id="wf1">
+                                    <button onclick="checkTF(1, true)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">T</button>
+                                    <button onclick="checkTF(1, false)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">F</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                                <span class="w-2/3">2. The writer gives his/her personal reaction AND THEN describes what happened.</span>
+                                <div class="flex gap-1" id="wf2">
+                                    <button onclick="checkTF(2, false)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">T</button>
+                                    <button onclick="checkTF(2, true)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">F</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                                <span class="w-2/3">3. The writer explains what problems different people faced.</span>
+                                <div class="flex gap-1" id="wf3">
+                                    <button onclick="checkTF(3, true)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">T</button>
+                                    <button onclick="checkTF(3, false)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">F</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                                <span class="w-2/3">4. The writer imagines himself/herself in the survival situation.</span>
+                                <div class="flex gap-1" id="wf4">
+                                    <button onclick="checkTF(4, true)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">T</button>
+                                    <button onclick="checkTF(4, false)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">F</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="w-2/3">5. The writer gives an opinion of the people in the situation.</span>
+                                <div class="flex gap-1" id="wf5">
+                                    <button onclick="checkTF(5, true)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">T</button>
+                                    <button onclick="checkTF(5, false)" class="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition">F</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pre-flight Spelling Check -->
+                <div class="bg-indigo-50 rounded-2xl p-6 mb-10 border border-indigo-100">
+                    <h4 class="font-bold text-indigo-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-spell-check"></i> Pre-flight Spelling Check</h4>
+                    <p class="text-sm text-slate-600 mb-4">Before you write, make sure you can spell these crucial words! Click the correct spelling.</p>
+                    <div class="flex flex-wrap gap-4" id="spell-check">
+                        <button onclick="checkSpell(this, true)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">survival</button>
+                        <button onclick="checkSpell(this, false)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">survivel</button>
+                        <span class="text-slate-300">|</span>
+                        <button onclick="checkSpell(this, true)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">achievement</button>
+                        <button onclick="checkSpell(this, false)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">achievment</button>
+                        <span class="text-slate-300">|</span>
+                        <button onclick="checkSpell(this, true)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">possibility</button>
+                        <button onclick="checkSpell(this, false)" class="bg-white border border-slate-300 px-4 py-2 rounded shadow-sm text-sm font-bold hover:bg-indigo-100 transition">possability</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Drafting -->
+                <h3 class="text-2xl font-bold text-slate-800 mb-4 border-t border-slate-200 pt-8">Step 2: Draft Your Post</h3>
+                <div class="instruction-box">
+                    <h4>Instructions</h4>
+                    <ul class="list-disc">
+                        <li>Choose a famous survival story (Juliane Koepcke, The Andes Flight, Aron Ralston) OR a personal story.</li>
+                        <li><strong>Paragraph 1:</strong> Speak directly to the reader. What happened? Who? When? What was the biggest problem?</li>
+                        <li><strong>Paragraph 2:</strong> How did they survive? (Use grammar: <em>managed to, succeeded in, was able to</em>).</li>
+                        <li><strong>Paragraph 3:</strong> What is your reaction? (Use character adjectives: <em>brave, resilient, resourceful</em>).</li>
+                    </ul>
+                </div>
+
+                <textarea class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 text-slate-700 h-64 mb-6 focus:ring-2 focus:ring-indigo-400 outline-none resize-y text-lg font-medium shadow-inner" placeholder="Start typing your amazing survival blog post here..."></textarea>
+                
+                <div class="flex justify-end">
+                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-8 rounded-full shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Post to Teacher
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 3: DESERT SIMULATION -->
+        <section id="tab3" class="tab-content fade-in">
+            <div class="glass-panel p-8 rounded-3xl">
+                <div class="transition-box">
+                    <h4><i class="fa-solid fa-sun"></i> Language & Life: The Desert Simulation</h4>
+                    <p>It's time to put your decision-making and negotiation skills to the ultimate test. Work with your group to survive the impossible.</p>
+                </div>
+
+                <div class="bg-amber-100 border-l-8 border-amber-500 rounded-r-2xl p-6 shadow-md mb-10">
+                    <h3 class="font-black text-amber-900 text-2xl mb-3">The Scenario ✈️💥🏜️</h3>
+                    <p class="text-amber-800 text-sm leading-relaxed mb-3">It is 9:00 AM on a warm July day. You and your three colleagues were on a short flight to Southern California when the plane developed mechanical problems. The pilot lost control and you crash-landed in the desert. The pilot is missing. You are alone.</p>
+                    <p class="text-amber-800 text-sm leading-relaxed mb-3">The nearest town is 30 km away. You have no cell signal. Daytime temperatures reach 40°C, and night falls below 0°C. You smell smoke—the plane's fuel tanks are going to explode very soon. You must grab what you can and run!</p>
+                </div>
+
+                <div class="instruction-box mb-8">
+                    <h4><i class="fa-solid fa-users"></i> Group Mission (15 minutes)</h4>
+                    <ol class="list-decimal">
+                        <li>Look at the 8 items below recovered from the crash.</li>
+                        <li><strong>Discuss and Debate:</strong> You can only take <strong>FOUR</strong> items before the plane explodes. Which are the most important?</li>
+                        <li>Click 4 items to select them.</li>
+                        <li>When your group agrees, click the big button to calculate your survival score based on real survival expert data!</li>
+                    </ol>
+                </div>
+
+                <!-- Interactive Item Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="desert-items-grid">
+                    <div onclick="toggleDesertItem(this, 'lighter')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🔥</div>
+                        <p class="font-bold text-slate-700 text-sm">Lighter</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'clothes')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🧥</div>
+                        <p class="font-bold text-slate-700 text-sm">Extra Clothes</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'map')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🗺️</div>
+                        <p class="font-bold text-slate-700 text-sm">Map of Area</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'chocolate')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🍫</div>
+                        <p class="font-bold text-slate-700 text-sm">Chocolate Bars</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'mirror')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🪞</div>
+                        <p class="font-bold text-slate-700 text-sm">Mirror</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'flashlight')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">🔦</div>
+                        <p class="font-bold text-slate-700 text-sm">Flashlight</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'radio')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">📻</div>
+                        <p class="font-bold text-slate-700 text-sm">Radio (Receive only)</p>
+                    </div>
+                    <div onclick="toggleDesertItem(this, 'water')" class="survival-item bg-white p-4 rounded-xl shadow border border-slate-200 text-center relative group">
+                        <div class="text-5xl mb-2 group-hover:scale-110 transition">💧</div>
+                        <p class="font-bold text-slate-700 text-sm">Water Container</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center bg-slate-900 p-6 rounded-2xl shadow-xl text-white">
+                    <div>
+                        <p class="text-slate-400 font-bold uppercase tracking-widest text-sm mb-1">Items Selected</p>
+                        <p class="text-3xl font-black text-amber-400"><span id="items-selected-count">0</span> / 4</p>
+                    </div>
+                    <button onclick="calculateSurvival()" id="calc-survival-btn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black py-4 px-8 rounded-full transition-transform active:scale-95 shadow-[0_6px_0_#047857] opacity-50 cursor-not-allowed" disabled>
+                        CALCULATE SURVIVAL SCORE
+                    </button>
+                </div>
+
+                <!-- Results Box (Hidden initially) -->
+                <div id="survival-results" class="hidden mt-10 bg-white rounded-3xl p-8 shadow-2xl border-4 border-emerald-500 relative overflow-hidden">
+                    <h3 class="text-3xl font-black text-slate-800 mb-2">The Expert Analysis 🧑‍🔬</h3>
+                    <p class="text-slate-600 mb-6 pb-6 border-b border-slate-200">The best strategy is to <strong>stay where you are</strong>. The worst strategy is to try and walk 30km in 40°C heat. Therefore, items for signaling and staying alive at night are the most valuable!</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-2">Your Team Score</p>
+                            <p id="final-score-display" class="text-7xl font-black text-emerald-500 mb-4">0</p>
+                            <p id="final-outcome-text" class="text-lg font-bold text-slate-800"></p>
+                        </div>
+                        
+                        <div class="bg-slate-50 p-5 rounded-xl text-sm text-slate-700 space-y-2 border border-slate-200">
+                            <p><strong>💧 Water (15 pts):</strong> Essential for survival.</p>
+                            <p><strong>🪞 Mirror (15 pts):</strong> Extremely important to reflect the sun and signal planes.</p>
+                            <p><strong>🔥 Lighter (10 pts):</strong> Can make a spark to start a fire at night.</p>
+                            <p><strong>🍫 Chocolate (10 pts):</strong> Easy to digest energy.</p>
+                            <p><strong>🔦 Flashlight (10 pts):</strong> Useful for signaling at night.</p>
+                            <p><strong>🧥 Clothes (5 pts):</strong> Useful when temperature drops at night.</p>
+                            <p><strong>🗺️ Map (0 pts):</strong> Useless if you are staying in one place.</p>
+                            <p><strong>📻 Radio (0 pts):</strong> You can only receive, not send a signal for help.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 4: WRAP UP (SPEED DEBATE) -->
+        <section id="tab4" class="tab-content fade-in">
+            <div class="glass-panel p-8 rounded-3xl text-center max-w-4xl mx-auto">
+                <div class="transition-box text-left">
+                    <h4><i class="fa-solid fa-stopwatch"></i> Wrap-up: "Would You Rather" Survival Edition</h4>
+                    <p>Let's finish the class with a high-energy discussion. You have 3 minutes to get through 5 extreme scenarios!</p>
+                </div>
+                
+                <h2 class="text-3xl font-black text-slate-800 mb-6">The 3-Minute Hot Seat 🔥</h2>
+                
+                <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden mb-8 border-4 border-rose-500">
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4">
+                        <div class="text-slate-400 font-bold uppercase tracking-wider text-sm">Scenario: <span id="debate-round" class="text-white text-lg ml-2">1 / 5</span></div>
+                        <div id="debate-timer" class="text-rose-400 text-3xl font-black font-mono">03:00</div>
+                    </div>
+                    
+                    <div class="relative z-10 min-h-[150px] flex items-center justify-center mb-8">
+                        <p id="debate-text" class="text-2xl md:text-3xl font-bold text-white leading-snug">
+                            Click "Start" to begin the countdown!
+                        </p>
+                    </div>
+
+                    <button onclick="nextDebate()" id="debate-next-btn" class="hidden bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-xl py-4 px-12 rounded-xl shadow-[0_6px_0_#047857] active:translate-y-[6px] active:shadow-none transition-all mx-auto">
+                        NEXT SCENARIO ➡️️
+                    </button>
+
+                    <button onclick="startDebate()" id="debate-start-btn" class="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-4 px-12 rounded-full text-xl shadow-[0_6px_0_#3730a3] active:translate-y-[6px] active:shadow-none transition-all mt-4">
+                        START DISCUSSION
+                    </button>
+                </div>
+
+                <div class="instruction-box text-left mx-auto max-w-2xl">
+                    <h4><i class="fa-solid fa-bolt"></i> The Rules</h4>
+                    <ul class="list-disc">
+                        <li>Read the "Would you rather" scenario aloud.</li>
+                        <li>Shout your choice and immediately give <strong>one sentence</strong> explaining why.</li>
+                        <li>Click next. Finish all 5 before the clock runs out!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // --- Core Functions ---
+        function switchTab(tabId) {
+            try {
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                const tabs = ['tab0', 'tab1', 'tab2', 'tab3', 'tab4'];
+                tabs.forEach(id => {
+                    const btn = document.getElementById(`btn-${id}`);
+                    if (btn) btn.className = "px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 text-slate-500 hover:bg-slate-100 whitespace-nowrap";
+                });
+                const target = document.getElementById(tabId);
+                if (target) target.classList.add('active');
+                const activeBtn = document.getElementById(`btn-${tabId}`);
+                if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 bg-slate-800 text-white shadow-md whitespace-nowrap";
+            } catch (e) { console.log('switchTab error:', e); }
+        }
+
+        function showToast(msg, type = 'success') {
+            try {
+                const toast = document.getElementById('toast');
+                toast.textContent = msg;
+                toast.className = `toast toast-${type} show`;
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            } catch (e) { console.log(e); }
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 0 (Suffix Factory) ---
+        const factoryData = [
+            { w: "invest", s: "-ment" }, { w: "improve", s: "-ment" }, { w: "agree", s: "-ment" }, { w: "pay", s: "-ment" },
+            { w: "kind", s: "-ness" }, { w: "fit", s: "-ness" }, { w: "polite", s: "-ness" }, { w: "lonely", s: "-ness" },
+            { w: "complex", s: "-ity" }, { w: "secure", s: "-ity" }, { w: "similar", s: "-ity" }, { w: "major", s: "-ity" },
+            { w: "invent", s: "-tion" }, { w: "discuss", s: "-tion" }, { w: "compete", s: "-tion" }, { w: "conclude", s: "-tion" },
+            { w: "build", s: "-er" }, { w: "design", s: "-er" }, { w: "translate", s: "-er" }, { w: "edit", s: "-er" }
+        ];
+        
+        let factoryQueue = [];
+        let currentFactoryObj = null;
+        let factoryScore = 0;
+
+        function startFactory() {
+            factoryQueue = [...factoryData].sort(() => Math.random() - 0.5);
+            factoryScore = 0;
+            document.getElementById('factory-score').textContent = factoryScore;
+            document.getElementById('factory-start-btn').classList.add('hidden');
+            document.getElementById('factory-controls').classList.remove('hidden');
+            nextFactoryWord();
+        }
+
+        function nextFactoryWord() {
+            document.getElementById('factory-count').textContent = factoryQueue.length;
+            if (factoryQueue.length === 0) {
+                document.getElementById('factory-word').textContent = "🎉 SHIFT OVER!";
+                document.getElementById('factory-controls').classList.add('hidden');
+                return;
+            }
+            currentFactoryObj = factoryQueue.pop();
+            document.getElementById('factory-word').textContent = currentFactoryObj.w.toUpperCase();
+        }
+
+        function checkFactory(guessSuffix) {
+            if (!currentFactoryObj) return;
+            const wordText = document.getElementById('factory-word');
+            
+            if (guessSuffix === currentFactoryObj.s) {
+                factoryScore++;
+                document.getElementById('factory-score').textContent = factoryScore;
+                wordText.classList.add('text-emerald-400');
+                showToast('Correct!', 'success');
+            } else {
+                wordText.classList.add('text-rose-500');
+                showToast(`Incorrect. It takes ${currentFactoryObj.s}`, 'error');
+            }
+            
+            setTimeout(() => {
+                wordText.classList.remove('text-emerald-400', 'text-rose-500');
+                nextFactoryWord();
+            }, 600);
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 1 (Vocab Match) ---
+        const vocabData = [
+            { w: "brave", d: "willing to do things that are dangerous" },
+            { w: "calm", d: "relaxed and not worried" },
+            { w: "confident", d: "believing in your own abilities" },
+            { w: "creative", d: "producing or using original and unusual ideas" },
+            { w: "curious", d: "wanting to know or learn about something" },
+            { w: "generous", d: "willing to give money, help, or time" },
+            { w: "independent", d: "not needing help from other people" },
+            { w: "selfish", d: "caring only about yourself" },
+            { w: "reliable", d: "able to be trusted or believed" },
+            { w: "resourceful", d: "skilled at solving problems" },
+            { w: "nervous", d: "worried and anxious" },
+            { w: "frightened", d: "feeling fear or worry" },
+            { w: "exhausted", d: "extremely tired" },
+            { w: "essential", d: "completely necessary" },
+            { w: "decisive", d: "able to make choices quickly" },
+            { w: "optimistic", d: "believing that good things will happen" },
+            { w: "panicked", d: "suddenly feeling so frightened you cannot think" },
+            { w: "resilient", d: "able to quickly return to a good condition" },
+            { w: "cautious", d: "avoiding risks" },
+            { w: "tough", d: "strong and able to deal with difficult situations" }
+        ];
+
+        let vocabScore = 0;
+        let activeVocabTarget = null;
+        let remainingVocab = [];
+
+        function initVocab() {
+            const bank = document.getElementById('word-bank');
+            bank.innerHTML = '';
+            
+            const shuffledWords = [...vocabData].sort(() => Math.random() - 0.5);
+            
+            shuffledWords.forEach((item) => {
+                const btn = document.createElement('button');
+                btn.className = "word-tile bg-white border border-slate-300 text-slate-700 font-bold py-3 px-2 rounded-xl text-sm shadow-sm hover:border-amber-400 hover:text-amber-600";
+                btn.textContent = item.w;
+                btn.onclick = () => checkVocabMatch(item.w, btn);
+                bank.appendChild(btn);
+            });
+
+            remainingVocab = [...vocabData].sort(() => Math.random() - 0.5);
+            nextVocabTarget();
+        }
+
+        function nextVocabTarget() {
+            const targetEl = document.getElementById('target-definition');
+            if (remainingVocab.length === 0) {
+                targetEl.innerHTML = "<span class='text-emerald-400'>🎉 All cleared! Incredible job!</span>";
+                return;
+            }
+            activeVocabTarget = remainingVocab.pop();
+            targetEl.textContent = activeVocabTarget.d;
+        }
+
+        function checkVocabMatch(guessedWord, btnEl) {
+            if (!activeVocabTarget) return;
+
+            if (guessedWord === activeVocabTarget.w) {
+                btnEl.classList.add('hidden-tile');
+                vocabScore++;
+                document.getElementById('vocab-score').textContent = `${vocabScore} / 20`;
+                showToast('✅ Match!', 'success');
+                nextVocabTarget();
+            } else {
+                btnEl.classList.add('wrong-highlight');
+                setTimeout(() => btnEl.classList.remove('wrong-highlight'), 500);
+                showToast('❌ Not quite! Try again.', 'error');
+                remainingVocab.unshift(activeVocabTarget); 
+                nextVocabTarget();
+            }
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 1 (Listening Check) ---
+        function checkListening() {
+            const answers = ["1954", "17", "3000", "loggers", "candy", "11", "biologist", "2011"]; // common answers for Juliane Koepcke listening
+            let correct = 0;
+            for(let i=1; i<=8; i++) {
+                const input = document.getElementById(`l${i}`);
+                const val = input.value.trim().toLowerCase();
+                const target = answers[i-1].toLowerCase();
+                
+                input.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
+                if (val === target || val.includes(target) || (target === "3000" && val.includes("3"))) { // very loose check for reality
+                    input.classList.add('border-green-500', 'bg-green-50');
+                    correct++;
+                } else {
+                    input.classList.add('border-red-500', 'bg-red-50');
+                }
+            }
+            if (correct === 8) showToast('✅ Notes perfect!', 'success');
+            else showToast(`❌ ${correct}/8 correct. Check notes!`, 'error');
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 2 (Writing Quiz & Speller) ---
+        let tfAnswered = new Set();
+        function checkTF(q, guessTrue) {
+            if (tfAnswered.has(q)) return;
+            const correctAnswers = { 1: true, 2: false, 3: true, 4: false, 5: true };
+            const container = document.getElementById(`wf${q}`);
+            const buttons = container.querySelectorAll('button');
+            const isCorrect = guessTrue === correctAnswers[q];
+            
+            buttons.forEach(b => b.disabled = true);
+            if (isCorrect) {
+                buttons[guessTrue ? 0 : 1].classList.add('bg-green-500', 'text-white');
+                showToast('✅ Correct!', 'success');
+            } else {
+                buttons[guessTrue ? 0 : 1].classList.add('bg-red-500', 'text-white');
+                buttons[correctAnswers[q] ? 0 : 1].classList.add('bg-green-500', 'text-white');
+                showToast('❌ Incorrect', 'error');
+            }
+            tfAnswered.add(q);
+        }
+
+        function checkSpell(btn, isCorrect) {
+            if (btn.classList.contains('bg-green-500') || btn.classList.contains('bg-red-500')) return; // already clicked
+            if (isCorrect) {
+                btn.classList.remove('bg-white', 'border-slate-300');
+                btn.classList.add('bg-green-500', 'text-white', 'border-green-600');
+                showToast('✅ Correct spelling!', 'success');
+            } else {
+                btn.classList.remove('bg-white', 'border-slate-300');
+                btn.classList.add('bg-red-500', 'text-white', 'border-red-600');
+                showToast('❌ Wrong spelling!', 'error');
+            }
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 3 (Desert Simulation) ---
+        let selectedItems = new Set();
+        const itemValues = {
+            'water': 15, 'mirror': 15, 'lighter': 10, 'chocolate': 10, 
+            'flashlight': 10, 'clothes': 5, 'map': 0, 'radio': 0
+        };
+
+        function toggleDesertItem(element, itemKey) {
+            const btnCalc = document.getElementById('calc-survival-btn');
+            
+            if (selectedItems.has(itemKey)) {
+                selectedItems.delete(itemKey);
+                element.classList.remove('selected');
+            } else {
+                if (selectedItems.size >= 4) {
+                    showToast('⚠️️ You can only carry 4 items!', 'info');
+                    return;
+                }
+                selectedItems.add(itemKey);
+                element.classList.add('selected');
+            }
+            
+            document.getElementById('items-selected-count').textContent = selectedItems.size;
+            
+            if (selectedItems.size === 4) {
+                btnCalc.disabled = false;
+                btnCalc.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                btnCalc.disabled = true;
+                btnCalc.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function calculateSurvival() {
+            let totalScore = 0;
+            selectedItems.forEach(item => { totalScore += itemValues[item]; });
+            
+            document.getElementById('final-score-display').textContent = totalScore;
+            
+            const outcomeText = document.getElementById('final-outcome-text');
+            const resultsBox = document.getElementById('survival-results');
+            
+            if (totalScore >= 45) {
+                outcomeText.textContent = "Congratulations! You've got great survival skills. You are rescued!";
+                outcomeText.className = "text-lg font-bold text-emerald-600";
+                resultsBox.className = "mt-10 bg-emerald-50 rounded-3xl p-8 shadow-2xl border-4 border-emerald-500 relative overflow-hidden block fade-in";
+            } else if (totalScore >= 35) {
+                outcomeText.textContent = "Good job. It wasn't easy, but you succeeded in getting rescued.";
+                outcomeText.className = "text-lg font-bold text-amber-600";
+                resultsBox.className = "mt-10 bg-amber-50 rounded-3xl p-8 shadow-2xl border-4 border-amber-500 relative overflow-hidden block fade-in";
+            } else {
+                outcomeText.textContent = "Uh-oh. The desert was the winner this time. You did not survive.";
+                outcomeText.className = "text-lg font-bold text-rose-600";
+                resultsBox.className = "mt-10 bg-rose-50 rounded-3xl p-8 shadow-2xl border-4 border-rose-500 relative overflow-hidden block fade-in";
+            }
+            
+            // Disable grid
+            document.getElementById('desert-items-grid').style.pointerEvents = 'none';
+            document.getElementById('calc-survival-btn').classList.add('hidden');
+        }
+
+        // --- STREAMING_CHUNK:Initializing Tab 4 (Speed Debate) ---
+        const debateData = [
+            "Would you rather be stuck in a desert OR a frozen mountain?",
+            "Would you rather have no water for 2 days OR no food for 5 days?",
+            "Would you rather survive a plane crash OR a sinking ship?",
+            "Would you rather have a broken leg in the jungle OR a broken arm in the desert?",
+            "Would you rather face a bear in the woods OR a shark in the ocean?"
+        ];
+        
+        let debateRound = 0;
+        let debateTimer = null;
+        
+        function startDebate() {
+            debateRound = 0;
+            document.getElementById('debate-start-btn').classList.add('hidden');
+            document.getElementById('debate-next-btn').classList.remove('hidden');
+            
+            // Timer logic (3 mins)
+            if (debateTimer) clearInterval(debateTimer);
+            let t = 180;
+            const el = document.getElementById('debate-timer');
+            
+            debateTimer = setInterval(() => {
+                t--;
+                const m = Math.floor(t / 60);
+                const s = t % 60;
+                el.textContent = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+                if (t <= 0) {
+                    clearInterval(debateTimer);
+                    endDebate();
+                }
+            }, 1000);
+            
+            loadDebateStatement();
+        }
+
+        function loadDebateStatement() {
+            if (debateRound >= debateData.length) {
+                endDebate();
+                return;
+            }
+            document.getElementById('debate-round').textContent = `${debateRound + 1} / 5`;
+            document.getElementById('debate-text').textContent = `"${debateData[debateRound]}"`;
+        }
+        
+        function nextDebate() {
+            debateRound++;
+            loadDebateStatement();
+        }
+        
+        function endDebate() {
+            if (debateTimer) clearInterval(debateTimer);
+            document.getElementById('debate-next-btn').classList.add('hidden');
+            document.getElementById('debate-text').textContent = "Debate Finished! Great choices.";
+        }
+
+        // --- Init ---
+        window.onload = function() {
+            try { initVocab(); } catch (e) { console.log('Vocab error:', e); }
+            switchTab('tab0');
+        };
+    </script>
+</body>
+</html>
